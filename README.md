@@ -76,13 +76,15 @@ Verlo is a **feature-rich ecommerce website** built on the **MERN stack** with a
    git clonegit clone https://github.com/AbirBarai08/e-commerce-website.git
 
 2. **Install dependencies**
+   ```bash
     cd BackEnd
     npm install
     
     cd ../FrontEnd
     npm install
 
-3. **Run the application**
+4. **Run the application**
+   ```bash
      ## Start backend
       cd BackEnd
       npm run dev
@@ -91,7 +93,7 @@ Verlo is a **feature-rich ecommerce website** built on the **MERN stack** with a
       cd ../FrontEnd
       npm run dev
 
-4. **Setup environment veriables**
+6. **Setup environment veriables**
 ## MongoDB
 MONGO_DB_URL=your_mongodb_connection_string
 
