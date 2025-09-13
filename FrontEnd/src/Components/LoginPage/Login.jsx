@@ -255,7 +255,7 @@ export default function Login() {
         transform: 'translate(-50%, -50%)',
         zIndex: 1300
       }}>
-        <CircularProgress color="primary" />
+        <CircularProgress color="#fff" />
       </Box>
     )}
 
