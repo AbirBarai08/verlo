@@ -1,198 +1,129 @@
-# 🛍️ Quickshop — Full-Stack E-Commerce Platform
+# 🛍️ Verlo – Modern E-commerce Platform  
 
-Quickshop is a scalable MERN stack e-commerce application built with clean architecture, robust edge-case handling, and secure authentication. It includes Google OAuth, OTP verification, dynamic product flows, and a modular admin dashboard.
-
----
-
-## 🚀 Features
-
-- 🔐 **Authentication**
-  - Google OAuth login
-  - OTP verification for sensitive actions
-
-- 🛒 **Product Management**
-  - Add/edit/delete products with image uploads
-  - Expiry logic and auto-cleanup for unavailable items
-
-- 🧾 **Cart & Wishlist**
-  - Handles deleted/expired products gracefully
-  - Modular backend utilities for state consistency
-
-- 🗣️ **Review & Feedback**
-  - Separate review and feedback flows
-  - Admin moderation and scalable structure
-
-- 🧑‍💼 **Admin Dashboard**
-  - Role-based access control
-  - Product visibility toggles and secure actions
-
-- 🌐 **Responsive UI/UX**
-  - Conditional rendering, loading overlays, and error feedback
-  - Mobile-friendly and visually polished
+Verlo is a **feature-rich ecommerce website** built on the **MERN stack** with a modular, scalable architecture. It combines a fast frontend, secure backend, and seamless user experience for online shopping.  
 
 ---
 
-## 🧰 Tech Stack
+## ⚙️ Core Architecture  
 
-| Layer        | Technology                     |
-|--------------|--------------------------------|
-| Frontend     | React, Vite, Tailwind CSS      |
-| Backend      | Node.js, Express.js            |
-| Database     | MongoDB, Mongoose              |
-| Auth         | JWT, Google OAuth, OTP logic   |
-| Validation   | Joi, Multer                    |
-| Storage      | Cloudinary (or local fallback) |
-| Dev Tools    | ESLint, Prettier, Git          |
+- **MERN Stack**  
+  - **MongoDB** – NoSQL database for users, products, carts, and orders  
+  - **Express.js** – Backend with modular routes, middleware, and error handling  
+  - **React (with Vite)** – High-performance frontend with modular components  
+  - **Node.js** – Runtime for scalable backend services  
 
----
-
-## 📁 Folder Structure
-
-quickshop/ ├── FrontEnd/        
-# React + Vite frontend │   ├── src/         
-# Components, pages, routing │   ├── public/      
-# Static assets │   └── ... ├── BackEnd/         
-# Express backend │   ├── models/     
-# Mongoose schemas │   ├── modules/     
-# Reusable backend utilities │   ├── routes/      
-# Auth, product, cart, feedback APIs │   └── ... ├── images/         
-# Product image uploads ├── .gitignore      
-# Ignores node_modules, .env, etc. ├── package.json    
-# Project metadata and scripts
-
+- **Vite** – Ultra-fast bundling and dev server for React  
+- **Tailwind CSS** – Utility-first responsive styling  
+- **Modular Backend** – Clear separation of routes, models, and utilities  
+- **Joi Validation** – Schema-based request validation for data integrity  
+- **Multer + Cloudinary** – Secure image upload, preview, validation, and cloud storage  
 
 ---
 
-## 🧪 Setup Instructions
+## 🔐 Authentication & Security  
 
-### 1. Clone the repository
-git clone https://github.com/AbirBarai08/e-commerce-website.git
-
-### 2. Install dependencies
-cd BackEnd
-npm install
-
-cd ../FrontEnd
-npm install
-
-### 4. Run the application
-# Start backend
-cd BackEnd
-npm run dev
-
-# Start frontend
-cd ../FrontEnd
-npm run dev
-
-Absolutely, Abir. Here's your README.md content fully structured in clean, professional Markdown format—ready to impress on GitHub:
-# 🛍️ Quickshop — Full-Stack E-Commerce Platform
-
-Quickshop is a scalable MERN stack e-commerce application built with clean architecture, robust edge-case handling, and secure authentication. It includes Google OAuth, OTP verification, dynamic product flows, and a modular admin dashboard.
+- **Google OAuth** – One-click login with Google accounts  
+- **OTP Verification** – Secure fallback authentication for sensitive flows or non-Google users  
 
 ---
 
-## 🚀 Features
+## 🛒 Product & Cart Logic  
 
-### 🔐 Authentication
-- Google OAuth login
-- OTP verification for sensitive actions
-
-### 🛒 Product Management
-- Add/edit/delete products with image uploads
-- Expiry logic and auto-cleanup for unavailable items
-
-### 🧾 Cart & Wishlist
-- Handles deleted/expired products gracefully
-- Modular backend utilities for state consistency
-
-### 🗣️ Review & Feedback
-- Separate review and feedback flows
-- Admin moderation and scalable structure
-
-### 🧑‍💼 Admin Dashboard
-- Role-based access control
-- Product visibility toggles and secure actions
-
-### 🌐 Responsive UI/UX
-- Conditional rendering, loading overlays, and error feedback
-- Mobile-friendly and visually polished
+- **Product CRUD** – Add, edit, delete products with image support  
+- **Expiry Logic** – Auto-flag or remove expired products  
+- **Cart & Wishlist Handling**  
+  - Auto-removal of deleted/expired items  
+  - Graceful handling of broken product references  
+  - Feedback to users when items are unavailable  
 
 ---
 
-## 🧰 Tech Stack
+## ⭐ Review & Feedback System  
 
-| Layer        | Technology                     |
-|--------------|--------------------------------|
-| Frontend     | React, Vite, Tailwind CSS      |
-| Backend      | Node.js, Express.js            |
-| Database     | MongoDB, Mongoose              |
-| Auth         | JWT, Google OAuth, OTP logic   |
-| Validation   | Joi, Multer                    |
-| Storage      | Cloudinary (or local fallback) |
-| Dev Tools    | ESLint, Prettier, Git          |
+- **Modular Review & Feedback Flow** – Separate handling of reviews and general feedback  
 
 ---
 
-## 📁 Folder Structure
+## 🛠️ Admin Dashboard  
 
-
-quickshop/ ├── FrontEnd/        # React + Vite frontend │   ├── src/         # Components, pages, routing │   ├── public/      # Static assets │   └── ... ├── BackEnd/         # Express backend │   ├── models/      # Mongoose schemas │   ├── modules/     # Reusable backend utilities │   ├── routes/      # Auth, product, cart, feedback APIs │   └── ... ├── images/          # Product image uploads ├── .gitignore       # Ignores node_modules, .env, etc. ├── package.json     # Project metadata and scripts
+- **Hero Image Management** – Add/update homepage hero images  
+- **Product Controls** – Full control over products, expiry, and availability  
 
 ---
 
-## 🧪 Setup Instructions
+## 🎨 UI/UX Enhancements  
 
-### 1. Clone the repository
-git clone https://github.com/AbirBarai08/e-commerce-website.git
+- **Conditional Rendering** – Dynamic UI based on product state, user role, and context  
+- **Loading Overlays** – Smooth transitions during async operations  
+- **Error Feedback** – Clear validation, authentication, and network error messages  
+- **Responsive Design** – Mobile-first, Tailwind-powered layout  
 
+---
 
-2. Install dependencies
-cd BackEnd
-npm install
+## 👨‍💻 Developer Experience  
 
-cd ../FrontEnd
-npm install
+- **Clean Codebase** – Modular utilities, reusable React components, and lean MongoDB schemas  
+- **Dot Notation Updates** – Efficient partial updates for arrays/images in MongoDB  
+- **Debugging Tools** – ESLint, Prettier, and structured error logging  
+- **Future-Proofing** – Scalable foundation for **AI features, analytics, and deployment**  
 
+---
 
-3. Configure environment variables
-Create a .env file inside BackEnd/:
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_API_KEY=your_cloudinary_key
+## 🚀 Getting Started  
 
+1. **Clone the repository**  
+   ```bash
+   git clonegit clone https://github.com/AbirBarai08/e-commerce-website.git
 
-4. Run the application
-# Start backend
-cd BackEnd
-npm run dev
+2. **Install dependencies**
+    cd BackEnd
+    npm install
+    
+    cd ../FrontEnd
+    npm install
 
-# Start frontend
-cd ../FrontEnd
-npm run dev
+3. **Run the application**
+     ## Start backend
+      cd BackEnd
+      npm run dev
+      
+      ## Start frontend
+      cd ../FrontEnd
+      npm run dev
 
-##🧠 Edge Case Handling
+4. **Setup environment veriables**
+## MongoDB
+MONGO_DB_URL=your_mongodb_connection_string
+
+## JWT Secret
+SECRET=your_jwt_secret
+
+## Cloudinary (for image uploads)
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
+
+## Google OAuth
+CLINT_ID=your_google_client_id
+CLINT_SECRET=your_google_client_secret
+CLINT_CALLBACK_URL=ypur_google_callback_url
+
+## Admin Email
+ADMIN_EMAIL=your_admin_email_address
+
+## Email Service (for OTP or notifications)
+SEND_EMAIL_PASS=your_email_app_password
+
+## 🧠 Edge Case Handling
 - 🧹 Cart/wishlist auto-cleanup for deleted or expired products
 - 🔐 OTP fallback for non-Google users or sensitive flows
 - 🖼 Image validation and partial updates using MongoDB dot notation
-- 🧑‍💼 Secure admin actions with role checks and feedback separation
 
-##📌 Project Status
-- ✅ MVP complete
-- 🔧 Actively refactoring for scalability
-- 🧠 Exploring AI-powered features (recommendations, semantic search)
-
-##👨‍💻 Author
+## 👨‍💻 Author
 Abir Barai
 BSc CS student | MERN stack developer | Product thinker
 📍 West Bengal, India
+🔗 GitHub Profile
 
-
-This version uses:
-- Clear section headers (`##`)
-- Subsections for readability
-- Code blocks for commands and structure
-- Tables and bullet points for clean formatting
-
-Let me know if you want to add deployment links, demo GIFs, or badges
-
-## 📁 Folder Structure
+Let me know if you want to add deployment links, demo GIFs
+
