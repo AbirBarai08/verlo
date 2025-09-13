@@ -1,0 +1,19 @@
+.product-image-wrapper .swiper-button-prev {
+    margin-left: 0;
+}
+
+.product-image-wrapper .swiper-button-next {
+    margin-right: 0;
+}
+
+.product-image-wrapper .swiper-button-prev,
+.product-image-wrapper .swiper-button-next {
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid #000;
+}
+
+.product-image-wrapper .swiper-button-prev::after,
+.product-image-wrapper .swiper-button-next::after {
+    font-size: 1rem;
+}

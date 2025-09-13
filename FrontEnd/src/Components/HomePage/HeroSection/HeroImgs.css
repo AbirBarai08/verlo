@@ -1,0 +1,103 @@
+.swiper-button-prev,
+.swiper-button-next {
+  color: #1d1d1d;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 28px;
+}
+
+.swiper-button-prev {
+  margin-left: 60px;
+}
+
+.swiper-button-next {
+  margin-right: 60px;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+  .swiper-button-prev {
+    margin-left: 40px;
+  }
+  .swiper-button-next {
+    margin-right: 40px;
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 768px) {
+  .swiper-button-prev {
+    margin-left: 20px;
+  }
+  .swiper-button-next {
+    margin-right: 20px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 640px) {
+  .swiper-button-prev {
+    margin-left: 10px;
+  }
+  .swiper-button-next {
+    margin-right: 10px;
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+      font-size: 20px;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+/* Pagination dots below the image */
+.swiper-pagination {
+  position: relative;
+  padding-top: 16px;
+  text-align: center;
+}
+
+/* Adjust margin for different screen sizes */
+@media (min-width: 640px) {
+  .swiper-pagination {
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .swiper-pagination {
+    padding-top: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .swiper-pagination {
+    padding-top: 28px;
+  }
+}
+
+/* Dot styles */
+.swiper-pagination-bullet {
+  opacity: 0.6;
+  background-color: gray;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black;
+  opacity: 1;
+}

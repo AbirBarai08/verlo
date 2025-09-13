@@ -1,0 +1,26 @@
+@media (max-width : 428px) {
+    .product-card {
+        max-width : 39.5%!important;
+        max-height : 280px!important;
+    }
+
+    .product-image {
+        height : 120px!important;
+    }
+
+    .product-ratings-number {
+        font-size: 0.75rem!important;
+    }
+
+    .product-ratings {
+        font-size: 0.75rem!important;
+    }
+
+    .product-buy-button {
+        height: 1.5rem !important;
+    }
+
+    .product-price {
+        font-size: 0.65rem !important;
+    }
+}
