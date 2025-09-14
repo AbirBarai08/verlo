@@ -4,7 +4,7 @@ if(process.env.NODE_ENV != "production") {
 
 const express = require('express');
 const cors = require('cors');
-const port = 5000;
+const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const app = express();
 const cron = require('node-cron'); //for automatic deletion
@@ -16,25 +16,24 @@ const Products = require("./models/product.js");
 const Users = require("./models/user.js");
 const wrapAsync = require("./Utils/wrapAsync.js");          //wrapAsync is a function that handle errors without stop server
 const ExpressError = require("./Utils/ExpressError.js");    //ExpressError is for building custom errors
-const productsRouter = require("./routes/product.js");
-const userRouter = require("./routes/user.js");
-const reviewRouter = require("./routes/review.js");
 const passport = require("passport");
 const MongoStore = require('connect-mongo');
 const cloudinary = require('cloudinary').v2;
+const productsRouter = require("./routes/product.js");
+const userRouter = require("./routes/user.js");
+const reviewRouter = require("./routes/review.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true
-};
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
 
-const sessionOptions = {
+app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
@@ -50,8 +49,7 @@ const sessionOptions = {
     secure: false,
     sameSite: 'lax',
   }
-}
-app.use(session(sessionOptions));
+}))
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -153,13 +151,14 @@ app.use("/products" , productsRouter);
 app.use("/users" , userRouter);
 app.use("/reviews" , reviewRouter);
 
-app.all("/{*splat}" , (req , res , next) => {
-    next(new ExpressError(404 , "page not found"));
-})
+app.use(express.static(path.join(__dirname, '../FrontEnd/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FrontEnd/dist', 'index.html'));
+});
 
 app.use((err , req, res, next) => {
     if (res.headersSent) {
-        return next(err); // delegate to default Express error handler
+      return next(err); 
     }
     let { status = 500, message = "Internal Server Error" } = err;
     res.status(status).json({
