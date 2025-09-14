@@ -17,12 +17,11 @@ router.post("/verify-login" , wrapAsync(userController.verifyLoginUser))
 //google signin
 router.get("/auth/google", (req, res, next) => {
     const { redirectUrl } = req.query;
-    const safeRedirect = typeof redirectUrl === 'string' && redirectUrl.startsWith('/') ? redirectUrl : '/';
 
     passport.authenticate("google", {
         scope: ["profile", "email"],
         prompt: "select_account",
-        state: safeRedirect
+        state: redirectUrl || "/"
     })(req, res, next);
 });
 
