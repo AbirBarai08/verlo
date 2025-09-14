@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+const BASE_URL = "https://e-commerce-website-1-g5ui.onrender.com";
 
 const useCartStore = create((set) => ({
     cartItems : [],
@@ -7,7 +8,7 @@ const useCartStore = create((set) => ({
     type: "",
 
     fetchCartItems: async() => {
-        const res = await axios.get("http://localhost:5000/products/cart", {
+        const res = await axios.get(`${BASE_URL}/products/cart`, {
             withCredentials: true
         });
         set({ cartItems: res.data.cartItems});
@@ -20,7 +21,7 @@ const useCartStore = create((set) => ({
         }
     },
     addToCart: async(id) => {
-        const res = await axios.post("http://localhost:5000/products/cart/add" , { id } , {
+        const res = await axios.post(`${BASE_URL}/products/cart/add` , { id } , {
             withCredentials: true
         });
         set({ cartItems: res.data.cartItems,
@@ -29,7 +30,7 @@ const useCartStore = create((set) => ({
         });
     },
     removeFromCart: async(id) => {
-        const res = await axios.delete("http://localhost:5000/products/cart" , {
+        const res = await axios.delete(`${BASE_URL}/products/cart` , {
             data: { id },
             withCredentials: true
         });
@@ -39,7 +40,7 @@ const useCartStore = create((set) => ({
         });
     },
     updateProductNumber: async(id , quantity) => {
-        const res = await axios.patch("http://localhost:5000/products/cart" , { id , quantity} , {
+        const res = await axios.patch(`${BASE_URL}/products/cart` , { id , quantity} , {
             withCredentials: true,
         })
         set({ cartItems : res.data.cartItems });

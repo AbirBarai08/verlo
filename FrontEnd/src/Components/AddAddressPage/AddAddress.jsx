@@ -19,7 +19,7 @@ export default function AddAddress() {
     useEffect(() => {
         if(submitted) {
             if (status === 200) {
-                if(redirectPage == `http://localhost:5173/products/buynow/:productId`) {
+                if(redirectPage === `https://e-commerce-website-2-cvtu.onrender.com/products/buynow/:productId`) {
                     navigate("/products/buynow", {
                         state: {
                             message , type

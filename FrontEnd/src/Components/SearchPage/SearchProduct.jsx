@@ -37,7 +37,7 @@ export default function SearchProduct() {
                 if(discountType) query.append("discountType" , discountType);
                 if(discountValue) query.append("discountValue" , discountValue);
 
-                const res = await axios.get(`http://localhost:5000/products/search?${query.toString()}`);
+                const res = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products/search?${query.toString()}`);
                 setProducts(res.data);
             } catch(err) {
                 handleApiError(err , navigate);

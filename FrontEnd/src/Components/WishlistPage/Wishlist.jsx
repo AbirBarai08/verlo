@@ -9,7 +9,7 @@ export default function Wishlist({ products }) {
 
     const fetchProductDetails = async (id) => {
         try {
-        const response = await fetch(`http://localhost:5000/products/${id}`);
+        const response = await fetch(`https://e-commerce-website-1-g5ui.onrender.com/products/${id}`);
         const data = await response.json();
         navigate(`/products/${id}`, { state: { productData: data } });
         }

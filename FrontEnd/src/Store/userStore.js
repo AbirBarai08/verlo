@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+const BASE_URL = "https://e-commerce-website-1-g5ui.onrender.com";
 
 const userStore = create((set) => ({
     message: "",
@@ -16,7 +17,7 @@ const userStore = create((set) => ({
 
     signupUser: async(formData) => {
         try {
-            const res = await axios.post("http://localhost:5000/users/signup" , formData , {
+            const res = await axios.post(`${BASE_URL}/users/signup` , formData , {
                 withCredentials: true
             });
             set({ message: res.data.message,
@@ -35,7 +36,7 @@ const userStore = create((set) => ({
     verifySignupUser: async(otp) => {
         try {
             const prevUrl = sessionStorage.getItem("redirectUrl"); 
-            const res = await axios.post("http://localhost:5000/users/verify-signup" , { otp } , {
+            const res = await axios.post(`${BASE_URL}/users/verify-signup` , { otp } , {
                 withCredentials: true,
             });
             set({
@@ -55,7 +56,7 @@ const userStore = create((set) => ({
 
     loginUser: async(formData) => {
         try{
-            const res = await axios.post("http://localhost:5000/users/login" , formData , {
+            const res = await axios.post(`${BASE_URL}/users/login` , formData , {
                 withCredentials: true
             });
             set({
@@ -75,7 +76,7 @@ const userStore = create((set) => ({
     verifyLoginUser: async(otp) => {
         try {
             const prevUrl = sessionStorage.getItem("redirectUrl"); 
-            const res = await axios.post("http://localhost:5000/users/verify-login" , { otp } , {
+            const res = await axios.post(`${BASE_URL}/users/verify-login` , { otp } , {
                 withCredentials: true,
             });
             set({
@@ -94,7 +95,7 @@ const userStore = create((set) => ({
     },
 
     fetchUser: async() => {
-        const res = await axios.get("http://localhost:5000/users/profile" , {withCredentials: true})
+        const res = await axios.get(`${BASE_URL}/users/profile` , {withCredentials: true})
         set({
             user: res.data,
         })
@@ -102,7 +103,7 @@ const userStore = create((set) => ({
 
     addAddress: async(formData) => {
         try {
-            const res = await axios.post("http://localhost:5000/users/addaddress", formData , { withCredentials: true })
+            const res = await axios.post(`${BASE_URL}/users/addaddress`, formData , { withCredentials: true })
             set({
                 message: res.data.message,
                 type: res.data.type,
@@ -119,7 +120,7 @@ const userStore = create((set) => ({
 
     editAddress: async(formData) => {
         try {
-            const res = await axios.patch("http://localhost:5000/users/updateaddress", formData , { withCredentials: true })
+            const res = await axios.patch(`${BASE_URL}/users/updateaddress`, formData , { withCredentials: true })
             set({
                 message: res.data.message,
                 type: res.data.type,
@@ -136,7 +137,7 @@ const userStore = create((set) => ({
 
     upgradeToSeller: async(id) => {
         try {
-            const res = await axios.post("http://localhost:5000/users/upgradetoseller" , { id } , {
+            const res = await axios.post(`${BASE_URL}/users/upgradetoseller` , { id } , {
                 withCredentials: true,
             })
             set({
@@ -155,7 +156,7 @@ const userStore = create((set) => ({
 
     logoutUser: async() => {
         try{
-            const res = await axios.post("http://localhost:5000/users/logout" , {
+            const res = await axios.post(`${BASE_URL}/users/logout` , {
                 withCredentials: true
             });
             sessionStorage.removeItem("isLoggedIn");

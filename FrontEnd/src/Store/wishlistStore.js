@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+const BASE_URL = "https://e-commerce-website-1-g5ui.onrender.com";
 
 const useWishlistStore = create((set) => ({
   likedItems: [],
@@ -8,7 +9,7 @@ const useWishlistStore = create((set) => ({
 
   fetchLikedItems: async () => {
     try {
-      const res = await axios.get("http://localhost:5000/products/wishlist", {
+      const res = await axios.get(`${BASE_URL}/products/wishlist`, {
         withCredentials: true
       });
       set({ likedItems: res.data.likedItems });
@@ -29,7 +30,7 @@ const useWishlistStore = create((set) => ({
 
   toggleLike: async (id) => {
     try{
-      const res = await axios.post("http://localhost:5000/products/wishlist/add", { id }, {
+      const res = await axios.post(`${BASE_URL}/products/wishlist/add`, { id }, {
         withCredentials: true
       });
       set({ 

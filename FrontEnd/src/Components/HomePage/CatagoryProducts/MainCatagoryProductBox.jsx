@@ -9,7 +9,7 @@ export default function MainCatagoryProductBox() {
     const catagories = ["Fashion" , "Mobiles", "Electronics", "Home & Furniters" , "Appliances", "Toys"]
 
     useEffect(() => {
-        fetch("http://localhost:5000")
+        fetch("https://e-commerce-website-1-g5ui.onrender.com")
             .then(res => res.json())
             .then(data => {
                 setProducts(data.products)

@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'https://e-commerce-website-2-cvtu.onrender.com',
     credentials: true
 };
 app.use(cors(corsOptions));

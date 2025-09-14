@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+const BASE_URL = "https://e-commerce-website-1-g5ui.onrender.com";
 
 const useReviewStore = create((set) => ({
     message: "",
@@ -9,7 +10,7 @@ const useReviewStore = create((set) => ({
 
     addReview: async({ productId, rating, review }) => {
         try {
-            const res = await axios.post("http://localhost:5000/reviews/addreview" , { productId, rating, review } , {
+            const res = await axios.post(`${BASE_URL}/reviews/addreview` , { productId, rating, review } , {
                 withCredentials: true
             });
             set({
@@ -28,7 +29,7 @@ const useReviewStore = create((set) => ({
 
     fetchReviews: async(id) => {
         try {
-            const res = await axios.get(`http://localhost:5000/reviews/${id}` , {
+            const res = await axios.get(`${BASE_URL}/reviews/${id}` , {
                 withCredentials: true
             });
             set({
@@ -45,7 +46,7 @@ const useReviewStore = create((set) => ({
 
     deleteReview: async(reviewId , productId) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/reviews/deletereview` , {
+            const res = await axios.delete(`${BASE_URL}/reviews/deletereview` , {
                 params: { reviewId , productId },
                 withCredentials: true
             });
@@ -65,7 +66,7 @@ const useReviewStore = create((set) => ({
 
     addFeedback: async({productId , message}) => {
         try{
-            const res = await axios.post("http://localhost:5000/reviews/addfeedback" , {productId , message} , {
+            const res = await axios.post(`${BASE_URL}/reviews/addfeedback` , {productId , message} , {
                 withCredentials: true
             });
             set({
@@ -84,7 +85,7 @@ const useReviewStore = create((set) => ({
 
     deleteFeedback: async(feedbackId , productId) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/reviews/deletefeedback` , {
+            const res = await axios.delete(`${BASE_URL}/reviews/deletefeedback` , {
                 params: { feedbackId , productId },
                 withCredentials: true
             });

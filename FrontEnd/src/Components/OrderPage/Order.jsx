@@ -14,7 +14,7 @@ export default function Order({ orderItems }) {
 
   const fetchProductDetails = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/products/${id}`);
+      const response = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products/${id}`);
       navigate(`/products/${id}`, { state: { productData: response.data } });
     } catch (err) {
       handleApiError(err, navigate);

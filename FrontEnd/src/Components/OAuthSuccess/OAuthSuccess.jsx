@@ -15,7 +15,7 @@ export default function OAuthSuccess() {
       const redirect = query.get("redirect");
 
       try {
-        const res = await axios.get("http://localhost:5000/users/me", {
+        const res = await axios.get("https://e-commerce-website-1-g5ui.onrender.com/users/me", {
           withCredentials: true,
         });
         setSnack({ message: res.data.message, type: res.data.type });

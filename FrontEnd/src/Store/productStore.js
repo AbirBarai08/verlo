@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+const BASE_URL = "https://e-commerce-website-1-g5ui.onrender.com";
 
 const useProductStore = create((set) => ({
     message: "",
@@ -13,7 +14,7 @@ const useProductStore = create((set) => ({
 
     fetchAllProducts: async() => {
         try {
-            const res = await axios.get("http://localhost:5000" , {
+            const res = await axios.get(`${BASE_URL}` , {
                 withCredentials: true
             });
             set({
@@ -32,7 +33,7 @@ const useProductStore = create((set) => ({
     addProduct : async(formData) => {
         try {
             const prevUrl = sessionStorage.getItem("redirectUrl");
-            const res = await axios.post("http://localhost:5000/products/addproduct" , formData , {
+            const res = await axios.post(`${BASE_URL}/products/addproduct` , formData , {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 },
@@ -55,7 +56,7 @@ const useProductStore = create((set) => ({
 
     fetchProducts : async() => {
         try{
-            const res = await axios.get("http://localhost:5000/products/showproducts" , {
+            const res = await axios.get(`${BASE_URL}/products/showproducts` , {
                 withCredentials: true
             })
             set({
@@ -75,7 +76,7 @@ const useProductStore = create((set) => ({
 
     fetchProduct: async(id) => {
         try{
-            const res = await axios.get(`http://localhost:5000/products/${id}` , {
+            const res = await axios.get(`${BASE_URL}/products/${id}` , {
                 withCredentials: true
             })
             set({
@@ -92,7 +93,7 @@ const useProductStore = create((set) => ({
 
     updateProduct: async(formData) => {
         try{
-            const res = await axios.patch("http://localhost:5000/products/updateproduct" , formData , {
+            const res = await axios.patch(`${BASE_URL}/products/updateproduct` , formData , {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 },
@@ -115,7 +116,7 @@ const useProductStore = create((set) => ({
 
     deleteProduct: async(id) => {
         try{
-            const res = await axios.delete(`http://localhost:5000/products/deleteproduct/${id}` , {
+            const res = await axios.delete(`${BASE_URL}/products/deleteproduct/${id}` , {
                 withCredentials: true
             })
             set({
@@ -134,7 +135,7 @@ const useProductStore = create((set) => ({
 
     buyProduct: async({productId , quantity}) => {
         try{
-            const res = await axios.post("http://localhost:5000/products/buyproduct" , { productId , quantity } , {
+            const res = await axios.post(`${BASE_URL}/products/buyproduct` , { productId , quantity } , {
                 withCredentials: true
             })
             set({
@@ -153,7 +154,7 @@ const useProductStore = create((set) => ({
 
     buyCartProducts: async({items}) => {
         try{
-            const res = await axios.post("http://localhost:5000/products/buycartproducts" , { items } , {
+            const res = await axios.post(`${BASE_URL}/products/buycartproducts` , { items } , {
                 withCredentials: true
             })
             set({
@@ -172,7 +173,7 @@ const useProductStore = create((set) => ({
 
     fetchOrderItems: async () => {
         try {
-            const res = await axios.get("http://localhost:5000/products/orderitems", {
+            const res = await axios.get(`${BASE_URL}/products/orderitems`, {
                 withCredentials: true
             });
             set({ orderItems: res.data.orderItems,
@@ -191,7 +192,7 @@ const useProductStore = create((set) => ({
 
     cancelOrder: async(productId) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/products/deleteorder/${productId}` , {
+            const res = await axios.delete(`${BASE_URL}/products/deleteorder/${productId}` , {
                 withCredentials: true
             });
             set({ orderItems: res.data.orderItems })
@@ -206,7 +207,7 @@ const useProductStore = create((set) => ({
 
     addHeroImage: async(formData) => {
         try {
-            const res = await axios.post("http://localhost:5000/products/addheroimage" , formData , {
+            const res = await axios.post(`${BASE_URL}/products/addheroimage` , formData , {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 },
