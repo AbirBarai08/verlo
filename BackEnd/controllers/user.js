@@ -33,7 +33,6 @@ module.exports.verifySignupUser = async(req , res) => {
     const likedItemsBeforeLogin = req.session.likedItems;
     const cartItemsBeforeLogin = req.session.cartItems;
 
-    console.log(pendingSignup);
     if(!pendingSignup) {
         return res.status(400).json({message: "session expired" , type: "error"})
     }
