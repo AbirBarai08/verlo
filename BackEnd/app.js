@@ -71,10 +71,7 @@ main()
 });
 
 async function main(){
-  await mongoose.connect(MONGO_URL , {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(MONGO_URL);
 }
 
 // Helper to extract publicId from Cloudinary URL
