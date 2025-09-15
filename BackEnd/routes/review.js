@@ -8,10 +8,12 @@ const reviewController = require("../controllers/review.js");
 //reviews
 router.post("/addreview" , isLoggedin, validateReview, wrapAsync(reviewController.addReviews))
 router.delete("/deletereview" , isLoggedin, wrapAsync(reviewController.deleteReviews))
-router.get("/:id" , isLoggedin, wrapAsync(reviewController.getProductReviews))
 
 //feedbacks
 router.post("/addfeedback" , isLoggedin , wrapAsync(reviewController.addFeedbacks))
 router.delete("/deletefeedback" , isLoggedin, wrapAsync(reviewController.deleteFeedbacks))
+
+router.get("/:id" , isLoggedin, wrapAsync(reviewController.getProductReviews))
+
 
 module.exports = router;
