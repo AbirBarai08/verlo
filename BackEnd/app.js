@@ -33,12 +33,11 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
-app.set('trust proxy', 1);
 
 const sessionOptions = {
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: true,   
+  saveUninitialized: true,
   store: MongoStore.create({
     mongoUrl: MONGO_URL,
     collectionName: "sessions",
@@ -47,12 +46,11 @@ const sessionOptions = {
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',                 
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === "production", 
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   }
-};
+}
 app.use(session(sessionOptions));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -154,7 +152,7 @@ app.use("/products" , productsRouter);
 app.use("/users" , userRouter);
 app.use("/reviews" , reviewRouter);
 
-app.all("*" , (req , res , next) => {
+app.all("/{*splat}" , (req , res , next) => {
     next(new ExpressError(404 , "page not found"));
 })
 
