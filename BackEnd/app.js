@@ -156,7 +156,7 @@ app.use("/products" , productsRouter);
 app.use("/users" , userRouter);
 app.use("/reviews" , reviewRouter);
 
-app.all("/{*splat}" , (req , res , next) => {
+app.all("*" , (req , res , next) => {
     next(new ExpressError(404 , "page not found"));
 })
 
