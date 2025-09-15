@@ -33,11 +33,14 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
+app.set('trust proxy', 1);
 
 const sessionOptions = {
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: true,   
   store: MongoStore.create({
     mongoUrl: MONGO_URL,
     collectionName: "sessions",
@@ -46,11 +49,12 @@ const sessionOptions = {
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === 'production',                 
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   }
-}
+};
 app.use(session(sessionOptions));
+
 
 app.use(passport.initialize());
 app.use(passport.session());

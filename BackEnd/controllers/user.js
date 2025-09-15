@@ -21,6 +21,7 @@ module.exports.signupUser = async(req , res) => {
     await Otps.create({ email , otp: hashedOtp , expiresAt });
 
     req.session.pendingSignup = { username , email , password };
+    req.session.save();
 
     await sendEmail(email , `Your VERLO signup OTP is ${otp}`);
     return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
@@ -91,6 +92,7 @@ module.exports.loginUser = async(req , res) => {
         await Otps.create({ email: user.email , otp: hashedOtp , expiresAt });
 
         req.session.pendingLogin = { userId : user._id};
+        req.session.save();
 
         await sendEmail(user.email , `Your VERLO login OTP is ${otp}`);
         return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
