@@ -260,7 +260,7 @@ export default function Signup() {
           transform: 'translate(-50%, -50%)',
           zIndex: 1300
         }}>
-          <CircularProgress color="#fff" />
+          <CircularProgress sx={{ color : "#fff" }} />
         </Box>
       )}
 
