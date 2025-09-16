@@ -29,7 +29,7 @@ export default function SearchProduct() {
             try {
                 const query = new URLSearchParams();
 
-                if(product) query.append("product" , product);
+                if(product) query.append("product" , product.toLowerCase());
                 if(minPrice) query.append("minPrice" , minPrice);
                 if(maxPrice) query.append("maxPrice" , maxPrice);
                 if(rating) query.append("rating" , rating);
