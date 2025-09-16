@@ -28,11 +28,7 @@ module.exports.catagoryProducts = async (req , res) => {
     }
 
     const products = await Products.find(filter);
-    if(products.length === 0) {
-        throw new ExpressError(404 , "products not found")
-    } else {
-        res.json(products);
-    }
+    res.json(products);
 }
 
 module.exports.searchProducts = async (req, res) => {

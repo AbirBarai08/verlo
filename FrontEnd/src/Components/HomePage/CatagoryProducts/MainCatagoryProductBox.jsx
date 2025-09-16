@@ -13,10 +13,11 @@ export default function MainCatagoryProductBox() {
     useEffect(() => {
         const allProducts = async () => {
             await fetchAllProducts();
-            setLoading(false)
+            setLoading(false);
+            console.log(products);
         };
         allProducts();
-    }, [fetchAllProducts]);
+    }, [fetchAllProducts , products]);
 
     return (
         <>
