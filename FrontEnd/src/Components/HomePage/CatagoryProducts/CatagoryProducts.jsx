@@ -29,7 +29,7 @@ export default function CatagoryProducts({ catagory }) {
                 <h2>Best of {catagory}</h2>
             </Box>
             <Box
-                className="flex flex-wrap justify-evenly sm:gap-5 md:gap-10 lg:gap-15 items-center pt-8"
+                className="flex flex-wrap justify-evenly sm:gap-2 md:gap-10 lg:gap-15 items-center pt-8"
                 sx={{ width: '100%',
                     '@media (max-width : 428px)' : {
                     justifyContent : '',
