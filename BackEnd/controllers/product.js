@@ -56,7 +56,7 @@ module.exports.searchProducts = async (req, res) => {
     filter.rating = { $gte: parseFloat(rating) };
   }
 
-  if(catagory) filter.catagory = catagory;
+  if(catagory) filter.catagory = decodeURIComponent(catagory);
   if(discountType) filter.discountType = discountType;
   if(discountValue) filter.discountValue = Number(discountValue);
 
