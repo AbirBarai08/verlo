@@ -10,7 +10,7 @@ export default function CatagoryProducts({ catagory }) {
 
     useEffect(() => {
         const fetchCatagoryProducts = async () => {
-            const encodedCatagory = catagory.toLowerCase();
+            const encodedCatagory = encodeURIComponent(catagory.toLowerCase());
             try {
                 const res = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products?catagory=${encodedCatagory}`);
                 setProducts(res.data);
