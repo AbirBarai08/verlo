@@ -57,7 +57,7 @@ router.get("/auth/google/callback" , passport.authenticate("google" , {
             delete req.session.cartItems;
         }
         await user.save();
-        res.redirect(`https://e-commerce-website-2-cvtu.onrender.com${prevUrl}`);
+        res.redirect(`https://e-commerce-website-2-cvtu.onrender.com/oauth-success?redirect=${prevUrl}`);
     }
 ))
 
