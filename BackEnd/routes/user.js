@@ -57,9 +57,23 @@ router.get("/auth/google/callback" , passport.authenticate("google" , {
             delete req.session.cartItems;
         }
         await user.save();
-        res.redirect(`https://e-commerce-website-2-cvtu.onrender.com/oauth-success?redirect=${prevUrl}`);
+        res.redirect(`/auth/set-cookie?redirect=${prevUrl}`);
     }
 ))
+
+router.get("/auth/set-cookie", (req, res) => {
+  const redirect = req.query.redirect || "/";
+  res.send(`
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0; URL='https://e-commerce-website-1-g5ui.onrender.com/oauth-success?redirect=${redirect}'" />
+      </head>
+      <body>
+        <p>Redirecting...</p>
+      </body>
+    </html>
+  `);
+});
 
 router.get("/me" , (req , res) => {
     if(!req.isAuthenticated()) {
