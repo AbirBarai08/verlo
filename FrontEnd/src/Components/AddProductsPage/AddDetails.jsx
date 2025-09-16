@@ -116,7 +116,7 @@ export default function AddDetails() {
                         required
                         error={errorData.name}
                         inputProps={{
-                            pattern: ".{1,30}",
+                            pattern: ".{1,300}",
                         }}
                         helperText={
                             errorData.name ? "Please enter a valid product name" : ""
