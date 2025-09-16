@@ -14,7 +14,7 @@ module.exports.catagoryProducts = async (req , res) => {
     const filter = {};
 
     if(catagory) {
-        filter.catagory = catagory;
+        filter.catagory = decodeURIComponent(catagory);
     }
 
     if(minPrice || maxPrice) {
