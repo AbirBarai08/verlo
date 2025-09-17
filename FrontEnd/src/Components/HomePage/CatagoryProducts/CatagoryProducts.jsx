@@ -39,7 +39,7 @@ export default function CatagoryProducts({ catagory }) {
                 {
                     loading ? 
                         <Box sx={{ display: 'flex' , flexWrap: 'wrap' , justifyContent: 'space-evenly' , bgcolor: '#fff',
-                            p: 8,
+                            pt: 8,
                             width: '100%',
                             height: '40%'}}>
                             {
