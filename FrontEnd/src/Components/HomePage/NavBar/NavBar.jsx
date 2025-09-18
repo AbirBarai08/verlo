@@ -222,13 +222,13 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Shop</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={fetchContactUs}>
         <IconButton size="large" color="inherit">
           <LocalPhoneOutlinedIcon />
         </IconButton>
         <p>Contact Us</p>
       </MenuItem>
-      <MenuItem>
+      <MenuItem onClick={fetchAboutUs}>
         <IconButton size="large" color="inherit">
           <InfoOutlinedIcon />
         </IconButton>
