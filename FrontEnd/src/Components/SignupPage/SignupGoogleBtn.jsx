@@ -4,7 +4,7 @@ import googleLogo from "../../assets/googleLogo.png";
 export default function SignupGoogleBtn({ type }) {
     const handleGoogleSignup = async () => {
         const prevUrl = sessionStorage.getItem("redirectUrl");
-        window.location.href = `https://e-commerce-website-1-g5ui.onrender.com/users/auth/google?redirectUrl=${prevUrl}`;
+        window.location.href = `https://verlo-server.onrender.com/users/auth/google?redirectUrl=${prevUrl}`;
     };
 
     return (

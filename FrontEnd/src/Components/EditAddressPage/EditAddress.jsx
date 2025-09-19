@@ -35,7 +35,7 @@ export default function EditAddress() {
     useEffect(() => {
         if(submitted) {
             if (status === 200) {
-                if(redirectPage === "https://e-commerce-website-2-cvtu.onrender.com/products/buynow/:productId") {
+                if(redirectPage === "https://verlo-8txq.onrender.com/products/buynow/:productId") {
                     navigate("/products/buynow", {
                         state: {
                             message , type

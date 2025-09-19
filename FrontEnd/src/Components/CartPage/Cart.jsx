@@ -34,7 +34,7 @@ export default function Cart() {
             const fetchCartProducts = async () => {
                 const ids = cartItems.map(item => item.id);
 
-                const res = await axios.post("https://e-commerce-website-1-g5ui.onrender.com/products/cart" , {
+                const res = await axios.post("https://verlo-server.onrender.com/products/cart" , {
                     ids
                 });
 
@@ -56,7 +56,7 @@ export default function Cart() {
 
     const fetchProductDetails = async (id) => {
         try {
-            const response = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/${id}`);
+            const response = await axios.get(`https://verlo-server.onrender.com/${id}`);
             navigate(`/products/${id}`, { state: { productData: response.data } });
         } catch (err) {
             handleApiError(err, navigate);

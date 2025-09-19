@@ -46,7 +46,7 @@ export default function Show({ products }) {
 
     const fetchProductDetails = async (id) => {
         try {
-            const response = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products/${id}`);
+            const response = await axios.get(`https://verlo-server.onrender.com/products/${id}`);
             navigate(`/products/${id}`, { state: { productData: response.data } });
         }
         catch(err) {

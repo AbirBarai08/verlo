@@ -26,7 +26,7 @@ router.get("/auth/google", (req, res, next) => {
 });
 
 router.get("/auth/google/callback" , passport.authenticate("google" , {
-    failureRedirect: "https://e-commerce-website-2-cvtu.onrender.com/users/login?error=google"
+    failureRedirect: "https://verlo-8txq.onrender.com/users/login?error=google"
 }),
     wrapAsync(async(req, res) => {
         const prevUrl = req.query.state || "/";
@@ -57,7 +57,7 @@ router.get("/auth/google/callback" , passport.authenticate("google" , {
             delete req.session.cartItems;
         }
         await user.save();
-        res.redirect(`https://e-commerce-website-2-cvtu.onrender.com/oauth-success?redirect=${prevUrl}`);
+        res.redirect(`https://verlo-8txq.onrender.com/oauth-success?redirect=${prevUrl}`);
     }
 ))
 

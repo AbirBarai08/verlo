@@ -30,7 +30,7 @@ export default function AllProducts() {
                 if(maxPrice) query.append("maxPrice" , maxPrice);
                 if(rating) query.append("rating" , rating);
 
-                const res = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products/allproducts?${query.toString()}`);
+                const res = await axios.get(`https://verlo-server.onrender.com/products/allproducts?${query.toString()}`);
                 setProducts(res.data);
                 setLoading(false);
             } catch(err) {

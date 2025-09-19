@@ -30,7 +30,7 @@ export default function WishlistPage() {
     useEffect(() => {
         if (likedItems.length > 0) {
             const fetchWishlistItems = async () => {
-                const res = await axios.post("https://e-commerce-website-1-g5ui.onrender.com/products/wishlist", {
+                const res = await axios.post("https://verlo-server.onrender.com/products/wishlist", {
                 ids: likedItems
             });
             setProducts(res.data);

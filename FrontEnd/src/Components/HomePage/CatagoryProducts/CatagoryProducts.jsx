@@ -12,7 +12,7 @@ export default function CatagoryProducts({ catagory }) {
         const fetchCatagoryProducts = async () => {
             const encodedCatagory = encodeURIComponent(catagory.toLowerCase());
             try {
-                const res = await axios.get(`https://e-commerce-website-1-g5ui.onrender.com/products?catagory=${encodedCatagory}`);
+                const res = await axios.get(`https://verlo-server.onrender.com/products?catagory=${encodedCatagory}`);
                 setProducts(res.data);
                 setLoading(false);
             } catch (error) {
