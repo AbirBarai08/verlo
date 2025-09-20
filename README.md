@@ -73,7 +73,7 @@ Verlo is a **feature-rich ecommerce website** built on the **MERN stack** with a
 
 1. **Clone the repository**  
    ```bash
-   git clonegit clone https://github.com/AbirBarai08/e-commerce-website.git
+   git clonegit clone https://github.com/AbirBarai08/verlo.git
 
 2. **Install dependencies**
    ```bash
