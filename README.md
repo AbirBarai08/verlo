@@ -125,7 +125,7 @@ SEND_EMAIL_PASS=your_email_app_password
 Abir Barai
 BSc CS student | MERN stack developer | Product thinker
 📍 West Bengal, India
-🔗 GitHub Profile
+🔗 [GitHub Profile](https://github.com/AbirBarai08)
 
 Let me know if you want to add deployment links, demo GIFs
 
