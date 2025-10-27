@@ -21,11 +21,8 @@ const sendEmail = async (to, message) => {
       console.log("Mail sent");
     } catch (err) {
       console.error("Mail error:", err.message);
-      return res.status(500).json({ message: "Failed to send OTP", error: err.message });
+      throw new Error(`Failed to send email: ${err.message}`);
     }
-
-res.status(200).json({ message: "OTP sent successfully" });
-
 };
 
 module.exports = sendEmail;
