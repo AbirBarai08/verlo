@@ -30,9 +30,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 const corsOptions = {
-    origin: 'https://verlo-8txq.onrender.com',
-    credentials: true
+  origin: FRONTEND_URL,
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
