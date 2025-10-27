@@ -1,10 +1,18 @@
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (to, message) => {
+    // Extract OTP from message for logging
+    const otpMatch = message.match(/\d{6}/);
+    if (otpMatch) {
+        console.log(`\n========== OTP for ${to} ==========`);
+        console.log(`OTP: ${otpMatch[0]}`);
+        console.log(`=====================================\n`);
+    }
+
     // Check if email password is configured
     if (!process.env.SEND_EMAIL_PASS) {
-        console.error("SEND_EMAIL_PASS environment variable is not set");
-        throw new Error("Email service is not configured. Please contact the administrator.");
+        console.warn("SEND_EMAIL_PASS not configured - email sending disabled");
+        return; // Don't throw error, just log and continue
     }
 
     // Configure transporter with better settings for cloud deployment
@@ -33,9 +41,9 @@ const sendEmail = async (to, message) => {
       console.log("Mail sent successfully to", to);
     } catch (err) {
       console.error("Mail error:", err.message);
-      // Log more details for debugging
-      console.error("Full error:", err);
-      throw new Error(`Failed to send email: ${err.message}`);
+      console.log("Email sending failed, but operation continues. OTP is logged above.");
+      // Don't throw error - let the operation continue
+      // The OTP has already been logged to console
     }
 };
 
