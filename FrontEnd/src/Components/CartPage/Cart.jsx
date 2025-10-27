@@ -8,6 +8,7 @@ import { useEffect , useState } from 'react';
 import userStore from '../../Store/userStore.js';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import OrderSummery from './OrderSummery.jsx';
+import { BASE_URL } from '../../Utils/apiConfig.js';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function Cart() {
             const fetchCartProducts = async () => {
                 const ids = cartItems.map(item => item.id);
 
-                const res = await axios.post("https://verlo-server.onrender.com/products/cart" , {
+                const res = await axios.post(`${BASE_URL}/products/cart` , {
                     ids
                 });
 
@@ -56,7 +57,7 @@ export default function Cart() {
 
     const fetchProductDetails = async (id) => {
         try {
-            const response = await axios.get(`https://verlo-server.onrender.com/${id}`);
+            const response = await axios.get(`${BASE_URL}/${id}`);
             navigate(`/products/${id}`, { state: { productData: response.data } });
         } catch (err) {
             handleApiError(err, navigate);

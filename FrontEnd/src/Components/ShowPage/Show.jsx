@@ -6,6 +6,7 @@ import axios from 'axios';
 import handleApiError from '../../Utils/handleApiError.js';
 import useProductStore from '../../Store/productStore.js';
 import { Backdrop, CircularProgress } from "@mui/material";
+import { BASE_URL } from '../../Utils/apiConfig.js';
 
 export default function Show({ products }) {
     const [open, setOpen] = useState(false);
@@ -46,7 +47,7 @@ export default function Show({ products }) {
 
     const fetchProductDetails = async (id) => {
         try {
-            const response = await axios.get(`https://verlo-server.onrender.com/products/${id}`);
+            const response = await axios.get(`${BASE_URL}/products/${id}`);
             navigate(`/products/${id}`, { state: { productData: response.data } });
         }
         catch(err) {

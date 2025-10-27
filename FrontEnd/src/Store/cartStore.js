@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-const BASE_URL = "https://verlo-server.onrender.com";
+import { BASE_URL } from '../Utils/apiConfig.js';
 
 const useCartStore = create((set) => ({
     cartItems : [],

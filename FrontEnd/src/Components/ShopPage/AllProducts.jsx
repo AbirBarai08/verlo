@@ -7,6 +7,7 @@ import handleApiError from "../../Utils/handleApiError.js";
 import { useNavigate } from "react-router-dom";
 import Snackbar from "../SnackBar/SnackBar.jsx";
 import useLocationSnackbar from "../../hook/useLocatioSnackBar.js";
+import { BASE_URL } from "../../Utils/apiConfig.js";
 
 export default function AllProducts() {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function AllProducts() {
                 if(maxPrice) query.append("maxPrice" , maxPrice);
                 if(rating) query.append("rating" , rating);
 
-                const res = await axios.get(`https://verlo-server.onrender.com/products/allproducts?${query.toString()}`);
+                const res = await axios.get(`${BASE_URL}/products/allproducts?${query.toString()}`);
                 setProducts(res.data);
                 setLoading(false);
             } catch(err) {

@@ -2,6 +2,7 @@ import { useEffect , useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import userStore from "../../Store/userStore.js";
+import { BASE_URL } from "../../Utils/apiConfig.js";
 
 export default function OAuthSuccess() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function OAuthSuccess() {
       const redirect = query.get("redirect");
 
       try {
-        const res = await axios.get("https://verlo-server.onrender.com/users/me", {
+        const res = await axios.get(`${BASE_URL}/users/me`, {
           withCredentials: true,
         });
         setSnack({ message: res.data.message, type: res.data.type });

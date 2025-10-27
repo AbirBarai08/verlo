@@ -5,6 +5,7 @@ import Wishlist from './Wishlist.jsx';
 import SnackBar from "../SnackBar/SnackBar.jsx";
 import useLocationSnackbar from '../../hook/useLocatioSnackBar.js';
 import PageLayout from '../PageLayout.jsx';
+import { BASE_URL } from '../../Utils/apiConfig.js';
 
 export default function WishlistPage() {
     const [products , setProducts] = useState([]);
@@ -30,7 +31,7 @@ export default function WishlistPage() {
     useEffect(() => {
         if (likedItems.length > 0) {
             const fetchWishlistItems = async () => {
-                const res = await axios.post("https://verlo-server.onrender.com/products/wishlist", {
+                const res = await axios.post(`${BASE_URL}/products/wishlist`, {
                 ids: likedItems
             });
             setProducts(res.data);

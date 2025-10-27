@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { useEffect , useState } from 'react';
 import axios from 'axios';
 import ProductSkeleton from '../AllProducts/ProductSkeleton.jsx';
+import { BASE_URL } from '../../../Utils/apiConfig.js';
 
 export default function CatagoryProducts({ catagory }) {
     const [loading , setLoading] = useState(true);
@@ -12,7 +13,7 @@ export default function CatagoryProducts({ catagory }) {
         const fetchCatagoryProducts = async () => {
             const encodedCatagory = encodeURIComponent(catagory.toLowerCase());
             try {
-                const res = await axios.get(`https://verlo-server.onrender.com/products?catagory=${encodedCatagory}`);
+                const res = await axios.get(`${BASE_URL}/products?catagory=${encodedCatagory}`);
                 setProducts(res.data);
                 setLoading(false);
             } catch (error) {

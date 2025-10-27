@@ -5,6 +5,7 @@ import handleApiError from '../../Utils/handleApiError.js';
 import useProductStore from '../../Store/productStore.js';
 import { useState } from 'react';
 import SnackBar from '../SnackBar/SnackBar.jsx';
+import { BASE_URL } from '../../Utils/apiConfig.js';
 
 export default function Order({ orderItems }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Order({ orderItems }) {
 
   const fetchProductDetails = async (id) => {
     try {
-      const response = await axios.get(`https://verlo-server.onrender.com/products/${id}`);
+      const response = await axios.get(`${BASE_URL}/products/${id}`);
       navigate(`/products/${id}`, { state: { productData: response.data } });
     } catch (err) {
       handleApiError(err, navigate);

@@ -2,6 +2,7 @@ import { Box , Typography } from '@mui/material';
 import LikeButton from '../HomePage/AllProducts/LikeButton.jsx';
 import { useNavigate } from 'react-router-dom';
 import handleApiError from '../../Utils/handleApiError.js';
+import { BASE_URL } from '../../Utils/apiConfig.js';
 
 export default function Wishlist({ products }) {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function Wishlist({ products }) {
 
     const fetchProductDetails = async (id) => {
         try {
-        const response = await fetch(`https://verlo-server.onrender.com/products/${id}`);
+        const response = await fetch(`${BASE_URL}/products/${id}`);
         const data = await response.json();
         navigate(`/products/${id}`, { state: { productData: data } });
         }

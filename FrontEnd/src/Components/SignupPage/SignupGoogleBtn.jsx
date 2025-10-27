@@ -1,10 +1,11 @@
 import { Button } from "@mui/material";
 import googleLogo from "../../assets/googleLogo.png";
+import { BASE_URL } from "../../Utils/apiConfig.js";
 
 export default function SignupGoogleBtn({ type }) {
     const handleGoogleSignup = async () => {
         const prevUrl = sessionStorage.getItem("redirectUrl");
-        window.location.href = `https://verlo-server.onrender.com/users/auth/google?redirectUrl=${prevUrl}`;
+        window.location.href = `${BASE_URL}/users/auth/google?redirectUrl=${prevUrl}`;
     };
 
     return (

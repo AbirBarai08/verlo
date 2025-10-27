@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-const BASE_URL = "https://verlo-server.onrender.com";
+import { BASE_URL } from '../Utils/apiConfig.js';
 
 const userStore = create((set) => ({
     message: "",
@@ -26,8 +26,8 @@ const userStore = create((set) => ({
             })
         } catch(err) {
             set({
-                message: err.response?.message || "Email must be unique",
-                type: err.response?.type || "error",
+                message: err.response?.data.message || "Email must be unique",
+                type: err.response?.data.type || "error",
                 status: err.response?.status || 500,
             })
         }
@@ -47,8 +47,8 @@ const userStore = create((set) => ({
             })
         } catch(err) {
             set({
-                message: err.response?.message || "Invalid OTP",
-                type: err.response?.type || "error",
+                message: err.response?.data.message || "Invalid OTP",
+                type: err.response?.data.type || "error",
                 status: err.response?.status || 500,
             })
         }
@@ -87,8 +87,8 @@ const userStore = create((set) => ({
             })
         } catch(err) {
             set({
-                message: err.response?.message || "Invalid OTP",
-                type: err.response?.type || "error",
+                message: err.response?.data.message || "Invalid OTP",
+                type: err.response?.data.type || "error",
                 status: err.response?.status || 500,
             })
         }

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import handleApiError from "../../Utils/handleApiError.js";
 import Snackbar from "../SnackBar/SnackBar.jsx";
 import useLocationSnackbar from "../../hook/useLocatioSnackBar.js";
+import { BASE_URL } from "../../Utils/apiConfig.js";
 
 export default function SearchProduct() {
     const [products , setProducts] = useState([]);
@@ -37,7 +38,7 @@ export default function SearchProduct() {
                 if(discountType) query.append("discountType" , discountType);
                 if(discountValue) query.append("discountValue" , discountValue);
 
-                const res = await axios.get(`https://verlo-server.onrender.com/products/search?${query.toString()}`);
+                const res = await axios.get(`${BASE_URL}/products/search?${query.toString()}`);
                 setProducts(res.data);
             } catch(err) {
                 handleApiError(err , navigate);

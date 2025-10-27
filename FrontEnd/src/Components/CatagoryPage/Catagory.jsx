@@ -7,6 +7,7 @@ import axios from 'axios';
 import handleApiError from "../../Utils/handleApiError.js";
 import Snackbar from "../SnackBar/SnackBar.jsx";
 import useLocationSnackbar from "../../hook/useLocatioSnackBar.js";
+import { BASE_URL } from "../../Utils/apiConfig.js";
 
 export default function Catagory() {
     const [products, setProducts] = useState([]);
@@ -33,7 +34,7 @@ export default function Catagory() {
                 if(maxPrice) query.append("maxPrice" , maxPrice);
                 if(rating) query.append("rating" , rating);
 
-                const res = await axios.get(`https://verlo-server.onrender.com/products?${query.toString()}`);
+                const res = await axios.get(`${BASE_URL}/products?${query.toString()}`);
                 setProducts(res.data);
                 setLoading(false);
             } catch(err) { handleApiError(err , navigate); }

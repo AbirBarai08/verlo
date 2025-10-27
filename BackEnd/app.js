@@ -31,7 +31,26 @@ app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const corsOptions = {
-    origin: 'https://verlo-8txq.onrender.com',
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        const allowedOrigins = [
+            'https://verlo-8txq.onrender.com',
+            'http://localhost:5173',
+            'http://localhost:3000',
+            'http://127.0.0.1:5173',
+            'http://127.0.0.1:3000'
+        ];
+        
+        if (allowedOrigins.indexOf(origin) !== -1 || (process.env.NODE_ENV !== "production" && origin && (origin.includes('localhost') || origin.includes('127.0.0.1')))) {
+            callback(null, true);
+        } else if (process.env.NODE_ENV === "production" && allowedOrigins.indexOf(origin) === -1) {
+            callback(new Error('Not allowed by CORS'));
+        } else {
+            callback(null, true);
+        }
+    },
     credentials: true
 };
 app.use(cors(corsOptions));
@@ -154,7 +173,7 @@ app.use("/products" , productsRouter);
 app.use("/users" , userRouter);
 app.use("/reviews" , reviewRouter);
 
-app.all("/{*splat}" , (req , res , next) => {
+app.all("*" , (req , res , next) => {
     next(new ExpressError(404 , "page not found"));
 })
 
