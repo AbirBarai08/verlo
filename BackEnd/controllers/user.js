@@ -7,6 +7,7 @@ const passport = require("passport");
 const mongoose = require('mongoose');
 
 module.exports.signupUser = async(req , res) => {
+    console.log("ok");
     const { username, email, password } = req.body;
     const user = await Users.findOne({ email: email }) 
     if(user) {
