@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const corsOptions = {
-  origin: https://verlo-8txq.onrender.com,
+  origin: 'https://verlo-8txq.onrender.com',
   credentials: true,
 };
 app.use(cors(corsOptions));
