@@ -26,6 +26,7 @@ const userStore = create((set) => ({
             set({ message: res.data.message,
                 type: res.data.type,
                 status: res.status,
+                redirectUrl: "/"
             })
         } catch(err) {
             set({
@@ -36,26 +37,7 @@ const userStore = create((set) => ({
         }
     },
 
-    verifySignupUser: async(otp) => {
-        try {
-            const prevUrl = sessionStorage.getItem("redirectUrl"); 
-            const res = await axios.post(`${BASE_URL}/users/verify-signup` , { otp } , {
-                withCredentials: true,
-            });
-            set({
-                message: res.data.message,
-                type: res.data.type,
-                status: res.status,
-                redirectUrl: prevUrl || "/",
-            })
-        } catch(err) {
-            set({
-                message: err.response?.data.message || "Invalid OTP",
-                type: err.response?.data.type || "error",
-                status: err.response?.status || 500,
-            })
-        }
-    },
+    // Removed OTP-based signup verification
 
     loginUser: async(formData) => {
         try{
@@ -66,6 +48,7 @@ const userStore = create((set) => ({
                 message: res.data.message,
                 type: res.data.type,
                 status: res.status,
+                redirectUrl: "/"
             })
         } catch(err) {
             set({
@@ -76,26 +59,7 @@ const userStore = create((set) => ({
         }
     },
 
-    verifyLoginUser: async(otp) => {
-        try {
-            const prevUrl = sessionStorage.getItem("redirectUrl"); 
-            const res = await axios.post(`${BASE_URL}/users/verify-login` , { otp } , {
-                withCredentials: true,
-            });
-            set({
-                message: res.data.message,
-                type: res.data.type,
-                status: res.status,
-                redirectUrl: prevUrl || "/",
-            })
-        } catch(err) {
-            set({
-                message: err.response?.data.message || "Invalid OTP",
-                type: err.response?.data.type || "error",
-                status: err.response?.status || 500,
-            })
-        }
-    },
+    // Removed OTP-based login verification
 
     fetchUser: async() => {
         const res = await axios.get(`${BASE_URL}/users/profile` , {withCredentials: true})

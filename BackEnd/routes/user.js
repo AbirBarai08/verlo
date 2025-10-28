@@ -6,13 +6,11 @@ const wrapAsync = require("../Utils/wrapAsync.js");
 const userController = require("../controllers/user.js");
 const passport = require("passport");
 
-//signup
+//signup (no OTP)
 router.post("/signup" , validateSchema(signupSchema) , wrapAsync(userController.signupUser))
-router.post("/verify-signup" , wrapAsync(userController.verifySignupUser))
 
-//login
+//login (no OTP)
 router.post("/login" , validateSchema(loginSchema) , wrapAsync(userController.loginUser))
-router.post("/verify-login" , wrapAsync(userController.verifyLoginUser))
 
 //google signin
 router.get("/auth/google", (req, res, next) => {

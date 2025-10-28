@@ -14,18 +14,16 @@ import userStore from "../../Store/userStore";
 import SnackBar from "../SnackBar/SnackBar.jsx";
 import SignupBackImg from '../SignupPage/SingnupBackImg.jsx';
 import SignupGoogleBtn from '../SignupPage/SignupGoogleBtn.jsx';
-import OTPDialogbox from '../OtpDialogbox/OtpDialogbox.jsx';
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { loginUser, verifyLoginUser , message, type, status, redirectUrl, setIsLoggedIn } = userStore();
+  const { loginUser, message, type, status, redirectUrl, setIsLoggedIn } = userStore();
   const [submitted , setSubmitted] = useState(false);
   const [formData, setFormData] = useState({email: '' , password: ''});
   const [errorData , setErrorData] = useState({ email: false, password: false })
   const [open, setOpen] = useState(false);
   const [openLocal , setOpenLocal] = useState(false);
-  const [otpOpen , setOtpOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [snackLocal , setSnackLocal] = useState({ message: "" , type: ""});
 
@@ -33,19 +31,13 @@ export default function Login() {
     if(submitted) {
       setLoading(false);
       if(status === 200) {
-        if(type === 'info') {
-          setOtpOpen(true);
-        } else {
-          setIsLoggedIn(true);
-          navigate(redirectUrl , {
-            state: {
-              message , type
-            }, replace: true  //this clears the browser history that after navigate "/" not to go login page
-          })
-        }
+        setIsLoggedIn(true);
+        navigate(redirectUrl , {
+          state: { message , type },
+          replace: true
+        })
       } else {
         setOpen(true)
-        setOtpOpen(false)
       }
     }
     setSubmitted(false)
@@ -100,11 +92,7 @@ export default function Login() {
     }
   };
 
-  const handleOtpVerify = async(otp) => {
-    await verifyLoginUser(otp);
-    setOtpOpen(false);
-    setSubmitted(true);
-  }
+  // OTP verification handler removed
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
@@ -261,7 +249,7 @@ export default function Login() {
 
     <SnackBar open={open} onClose={handleClose} message={message} type={type} />
     <SnackBar open={openLocal} onClose={handleClose} message={snackLocal.message} type={snackLocal.type}/>
-    <OTPDialogbox open={otpOpen} onClose={() => setOtpOpen(false)} onVerify={handleOtpVerify}/>
+    {/* OTP dialog removed */}
     </>
   );
 }

@@ -1,79 +1,21 @@
 const ExpressError = require("../Utils/ExpressError.js");
-const crypto = require('crypto');
-const Otps = require("../models/otp.js");
-const sendEmail = require("../Utils/sendEmail.js");
 const Users = require("../models/user.js");
 const passport = require("passport");
 const mongoose = require('mongoose');
 
 module.exports.signupUser = async(req , res) => {
     const { username, email, password } = req.body;
-    const user = await Users.findOne({ email: email }) 
-    if(user) {
+    const existingUser = await Users.findOne({ email: email })
+    if(existingUser) {
         return res.status(400).json({message: "Email must be unique" , type: "error"})
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+    const isAdmin = email === process.env.ADMIN_EMAIL;
+    const newUser = new Users({ username, email, type: isAdmin ? "admin" : "buyers"});
+    const registeredUser = await Users.register(newUser, password);
 
-    await Otps.deleteMany({ email : email });
-    await Otps.create({ email , otp: hashedOtp , expiresAt });
-
-    req.session.pendingSignup = { username , email , password };
-        
-    await new Promise((resolve, reject) => {
-        req.session.save((err) => {
-            if (err) {
-                console.error("Session save error:", err);
-                reject(err);
-            } else {
-                console.log("Session saved successfully");
-                resolve();
-            }
-        });
-    });
-
-    try {
-        await sendEmail(email, `Your VERLO signup OTP is ${otp}`);
-        return res.status(200).json({ message: "OTP sent to your email", type: "info" });
-    } catch (err) {
-        console.error("Email send failed:", err.message);
-        return res.status(500).json({ message: "Failed to send OTP. Please try again.", type: "error" });
-    }
-
-}
-
-module.exports.verifySignupUser = async(req , res) => {
-    const { otp } = req.body;
-
-    await new Promise((resolve) => {
-        req.session.reload(() => {
-            console.log("Session reloaded");
-            resolve();
-        });
-    });
-
-    const pendingSignup = req.session.pendingSignup;
     const likedItemsBeforeLogin = req.session.likedItems;
     const cartItemsBeforeLogin = req.session.cartItems;
-
-    if(!pendingSignup) {
-        return res.status(400).json({message: "session expired" , type: "error"})
-    }
-
-    const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
-    const record = await Otps.findOne({ email: pendingSignup.email , otp: hashedOtp });
-
-    if(!record || record.expiresAt < new Date()) {
-        return res.status(400).json({message: "Invalid or expired OTP" , type: "error"})
-    }
-
-    await Otps.deleteMany({ email : pendingSignup.email });
-
-    const isAdmin = pendingSignup.email === process.env.ADMIN_EMAIL;
-    const newUser = new Users({ username: pendingSignup.username , email: pendingSignup.email , type: isAdmin ? "admin" : "buyers"});
-    const registeredUser = await Users.register(newUser, pendingSignup.password);
 
     req.login(registeredUser , async(err) => {
         if(err) {
@@ -104,106 +46,47 @@ module.exports.verifySignupUser = async(req , res) => {
 }
 
 module.exports.loginUser = async(req , res) => {
-    passport.authenticate("local" , async(err , user, info) => {
+    passport.authenticate("local" , async(err , user) => {
         if(err || !user) {
             return res.status(400).json({message: "Invalid credentials" , type: "error"})
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
-        const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+        const likedItemsBeforeLogin = req.session.likedItems;
+        const cartItemsBeforeLogin = req.session.cartItems;
 
-        await Otps.deleteMany({ email : user.email });
-        await Otps.create({ email: user.email , otp: hashedOtp , expiresAt });
+        req.login(user , async(loginErr) => {
+            if(loginErr) {
+                return res.status(500).json({ message: "Login failed" , type: "error" });
+            }
 
-        req.session.pendingLogin = { userId : user._id};
-        
-        await new Promise((resolve, reject) => {
-            req.session.save((err) => {
-                if (err) {
-                    console.error("Session save error:", err);
-                    reject(err);
-                } else {
-                    console.log("Session saved successfully");
-                    resolve();
-                }
-            });
-        });
+            if(user.email === process.env.ADMIN_EMAIL && user.type !== "admin"){
+                user.type = "admin"
+            }
 
-        try {
-            await sendEmail(user.email , `Your VERLO login OTP is ${otp}`);
-            return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
-        } catch (err) {
-            console.error("Email send failed:", err.message);
-            return res.status(500).json({ message: "Failed to send OTP. Please try again.", type: "error" });
-        }
+            if(Array.isArray(likedItemsBeforeLogin) && likedItemsBeforeLogin.length > 0) {
+                user.wishlist = [...new Set([...user.wishlist , ...likedItemsBeforeLogin])];
+                delete req.session.likedItems;
+            }
+
+            if(Array.isArray(cartItemsBeforeLogin) && cartItemsBeforeLogin.length > 0) {
+                cartItemsBeforeLogin.forEach(sessionItem => {
+                    const existingItem = user.cart.find(item => item.id.toString() === sessionItem.id.toString())
+                    
+                    if(existingItem) {
+                        existingItem.quantity += sessionItem.quantity;
+                    } else {
+                        user.cart.push({ id: sessionItem.id , quantity: sessionItem.quantity });
+                    }
+                })
+                delete req.session.cartItems;
+            }
+
+            await user.save();
+            return res.status(200).json({message: `Welcome back ${user.username}` , type:"success"});
+        })
     })(req, res);
 }
-
-module.exports.verifyLoginUser = async(req , res) => {
-    const { otp } = req.body;
-
-    await new Promise((resolve) => {
-        req.session.reload(() => {
-            console.log("Session reloaded");
-            resolve();
-        });
-    });
-
-    const pendingLogin = req.session.pendingLogin;
-    const likedItemsBeforeLogin = req.session.likedItems;
-    const cartItemsBeforeLogin = req.session.cartItems;
-
-    if(!pendingLogin) {
-        return res.status(400).json({message: "session expired" , type: "error"})
-    }
-
-    const user = await Users.findById(pendingLogin.userId);
-    if(!user) {
-        return res.status(404).json({message: "user not found" , type: "error"})
-    }
-
-    const hashedOtp = crypto.createHash("sha256").update(otp).digest("hex");
-    const record = await Otps.findOne({ email: user.email , otp: hashedOtp });
-
-    if(!record || record.expiresAt < new Date()) {
-        return res.status(400).json({message: "Invalid or expired OTP" , type: "error"})
-    }
-
-    await Otps.deleteMany({ email : user.email });
-    req.session.pendingLogin = null;
-
-    req.login(user , async(err) => {
-        if(err) {
-            return res.status(500).json({ message: "Login failed" , type: "error" });
-        }
-
-        if(user.email === process.env.ADMIN_EMAIL && user.type !== "admin"){
-            user.type = "admin"
-        }
-
-        if(Array.isArray(likedItemsBeforeLogin) && likedItemsBeforeLogin.length > 0) {
-            user.wishlist = [...new Set([...user.wishlist , ...likedItemsBeforeLogin])];
-            delete req.session.likedItems;
-        }
-
-        if(Array.isArray(cartItemsBeforeLogin) && cartItemsBeforeLogin.length > 0) {
-            cartItemsBeforeLogin.forEach(sessionItem => {
-                const existingItem = user.cart.find(item => item.id.toString() === sessionItem.id.toString())
-                
-                if(existingItem) {
-                    existingItem.quantity += sessionItem.quantity;
-                } else {
-                    user.cart.push({ id: sessionItem.id , quantity: sessionItem.quantity });
-                }
-            })
-            delete req.session.cartItems;
-        }
-
-        await user.save();
-        return res.status(200).json({message: `Welcome back ${user.username}` , type:"success"});
-    })
-}
+// Deprecated OTP verification endpoints removed
 
 module.exports.getUser = async(req , res , next) => {
     const user = req.session.user;

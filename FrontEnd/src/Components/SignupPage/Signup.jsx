@@ -14,16 +14,14 @@ import userStore from '../../Store/userStore.js';
 import SnackBar from "../SnackBar/SnackBar.jsx";
 import SignupBackImg from './SingnupBackImg.jsx';
 import SignupGoogleBtn from './SignupGoogleBtn.jsx';
-import OTPDialogbox from '../OtpDialogbox/OtpDialogbox.jsx';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openLocal, setOpenLocal] = useState(false);
   const [snackLocal, setSnackLocal] = useState({ message: "", type: "" });
-  const { signupUser, verifySignupUser, message, type, status, redirectUrl, setIsLoggedIn } = userStore();
+  const { signupUser, message, type, status, redirectUrl, setIsLoggedIn } = userStore();
   const [submitted, setSubmitted] = useState(false);
-  const [otpOpen, setOtpOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -42,18 +40,13 @@ export default function Signup() {
     if (submitted) {
       setLoading(false); 
       if (status === 200) {
-        if (type === 'info') {
-          setOtpOpen(true);
-        } else {
-          setIsLoggedIn(true);
-          navigate(redirectUrl, {
-            state: { message, type },
-            replace: true
-          });
-        }
+        setIsLoggedIn(true);
+        navigate(redirectUrl, {
+          state: { message, type },
+          replace: true
+        });
       } else {
         setOpen(true);
-        setOtpOpen(false);
       }
     }
     setSubmitted(false);
@@ -77,7 +70,6 @@ export default function Signup() {
       setSnackLocal({ message: "Form is invalid! check the fields", type: "error" });
       setOpenLocal(true);
       setFormData({ username: '', email: '', password: '' });
-      setOtpOpen(false);
     } else {
       setLoading(true);
       await signupUser(formData);
@@ -87,11 +79,7 @@ export default function Signup() {
     }
   };
 
-  const handleOtpVerify = async (otp) => {
-    await verifySignupUser(otp);
-    setOtpOpen(false);
-    setSubmitted(true);
-  };
+  // OTP verification handler removed
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
@@ -266,7 +254,7 @@ export default function Signup() {
 
       <SnackBar open={open} onClose={handleClose} message={message} type={type} />
       <SnackBar open={openLocal} onClose={handleClose} message={snackLocal.message} type={snackLocal.type} />
-      <OTPDialogbox open={otpOpen} onClose={() => setOtpOpen(false)} onVerify={handleOtpVerify} />
+      {/* OTP dialog removed */}
     </>
   );
 }
