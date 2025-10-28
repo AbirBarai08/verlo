@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const sendEmail = async (to, message) => {
   try {
     await resend.emails.send({
-      from: 'VERLO <abirbarai08@gmail.com>',
+      from: 'VERLO <onboarding@resend.dev>',
       to: to,
       subject: 'Your VERLO OTP',
       html: message,
