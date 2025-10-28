@@ -5,7 +5,6 @@ const ExpressError = require("../Utils/ExpressError.js");
 const Users = require('../models/user.js');
 const { cloudinary } = require("../config/cloudConfig.js");
 const { Mongoose } = require('mongoose');
-const sendEmail = require("../Utils/sendEmail.js");
 const buildImageUpdateOps = require("../Utils/buildImageUpdateOps.js");
 
 
@@ -507,13 +506,10 @@ module.exports.buyProducts = async(req , res) => {
     const { productId , quantity } = req.body;
     const product = await Products.findById(productId);
     const user = await Users.findById(req.user._id);
-    const currDate = new Date(Date.now());
 
     if(!product) {
         throw new ExpressError(404 , "Product not found")
     }
-
-    const populatedProduct = await product.populate("owner");
 
     if(!user) {
         throw new ExpressError(404 , "User not found")
@@ -521,17 +517,6 @@ module.exports.buyProducts = async(req , res) => {
 
     user.orders.push({ product: productId , quantity: quantity });
     await user.save();
-
-    const message = 
-        `Hello ${populatedProduct.owner.username},
-        Great news! Your product has just been purchased.
-        Product Details:
-        - Name: ${product.name}
-        - Product ID: ${product._id}
-        - Quantity Ordered: ${quantity}
-        - Date: ${currDate.toLocaleString()}`;
-
-    await sendEmail(populatedProduct.owner.email , message);
 
     return res.status(200).json({ message: "Order placed successfully" , type: "success" });
 }
@@ -552,32 +537,13 @@ module.exports.buyCartProducts = async (req, res) => {
     return res.status(400).json({ message: "Some products are invalid", type: "error" });
   }
 
-  const currDate = new Date();
-
   for (const item of items) {
     const qty = Number(item.quantity);
     if (!qty || qty <= 0) {
       throw new ExpressError(400, `Invalid quantity for product ${item.productId}`);
     }
 
-    const product = products.find(p => p._id.equals(item.productId));
     user.orders.push({ product: item.productId, quantity: qty });
-
-    const seller = product.owner;
-    if (seller?.email) {
-      const message = `
-        Product Purchased!
-
-        Product: ${product.name}
-        Product ID: ${product._id}
-        Quantity Ordered: ${qty}
-        Buyer: ${user.username}
-        Buyer Email: ${user.email}
-        Date: ${currDate.toLocaleString()}
-
-        Please prepare the order for dispatch.`;
-      await sendEmail(seller.email, message);
-    }
   }
 
   user.cart = [];
@@ -650,14 +616,6 @@ module.exports.deleteOrderProducts = async(req , res) => {
     if (user.orders.length === originalLength) {
         return res.status(404).json({ message: "Order not found", type: "error" });
     }
-
-    const message = `Hello ${product.owner.username},
-        We regret to inform you that an order for your product has been cancelled by the buyer.
-        Product Details:
-        - Name: ${product.name}
-        - Product ID: ${product._id}
-        - Quantity Ordered: ${qty}`
-    await sendEmail(product.owner.email , message);
 
     await user.save();
     await user.populate("orders.product");
