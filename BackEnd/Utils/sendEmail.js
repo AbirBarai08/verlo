@@ -1,27 +1,18 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (to, message) => {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'abirbarai08@gmail.com',
-            pass: process.env.SEND_EMAIL_PASS,
-        },
+  try {
+    await resend.emails.send({
+      from: 'VERLO <abirbarai08@gmail.com>',
+      to,
+      subject: 'Your VERLO OTP',
+      text: message
     });
-
-    const mailOptions = {
-        from: `"VERLO" <abirbarai08@gmail.com>`,
-        to,
-        subject: 'Message for you',
-        text: message,
-    };
-
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log("Mail sent successfully to", to);
-    } catch (err) {
-      console.error("Mail error:", err.message);
-    }
+    console.log("OTP email sent to", to);
+  } catch (err) {
+    console.error("Resend email error:", err);
+  }
 };
 
 module.exports = sendEmail;
