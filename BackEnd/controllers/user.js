@@ -131,8 +131,8 @@ module.exports.loginUser = async(req , res) => {
         });
 
         try {
-            await sendEmail(email, `Your VERLO signup OTP is ${otp}`);
-            return res.status(200).json({ message: "OTP sent to your email", type: "info" });
+            await sendEmail(user.email , `Your VERLO login OTP is ${otp}`);
+            return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
         } catch (err) {
             console.error("Email send failed:", err.message);
             return res.status(500).json({ message: "Failed to send OTP. Please try again.", type: "error" });
