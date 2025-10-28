@@ -22,6 +22,7 @@ const reviewRouter = require("./routes/review.js");
 const passport = require("passport");
 const MongoStore = require('connect-mongo');
 const cloudinary = require('cloudinary').v2;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 app.set('trust proxy', 1);
 
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname , "/public")));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const corsOptions = {
-  origin: 'https://verlo-8txq.onrender.com',
+  origin: FRONTEND_URL,
   credentials: true,
 };
 app.use(cors(corsOptions));

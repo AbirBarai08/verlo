@@ -21,14 +21,39 @@ module.exports.signupUser = async(req , res) => {
     await Otps.create({ email , otp: hashedOtp , expiresAt });
 
     req.session.pendingSignup = { username , email , password };
-    req.session.save();
+        
+    await new Promise((resolve, reject) => {
+        req.session.save((err) => {
+            if (err) {
+                console.error("Session save error:", err);
+                reject(err);
+            } else {
+                console.log("Session saved successfully");
+                resolve();
+            }
+        });
+    });
 
-    await sendEmail(email , `Your VERLO signup OTP is ${otp}`);
-    return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
+    try {
+        await sendEmail(email, `Your VERLO signup OTP is ${otp}`);
+        return res.status(200).json({ message: "OTP sent to your email", type: "info" });
+    } catch (err) {
+        console.error("Email send failed:", err.message);
+        return res.status(500).json({ message: "Failed to send OTP. Please try again.", type: "error" });
+    }
+
 }
 
 module.exports.verifySignupUser = async(req , res) => {
     const { otp } = req.body;
+
+    await new Promise((resolve) => {
+        req.session.reload(() => {
+            console.log("Session reloaded");
+            resolve();
+        });
+    });
+
     const pendingSignup = req.session.pendingSignup;
     const likedItemsBeforeLogin = req.session.likedItems;
     const cartItemsBeforeLogin = req.session.cartItems;
@@ -92,15 +117,39 @@ module.exports.loginUser = async(req , res) => {
         await Otps.create({ email: user.email , otp: hashedOtp , expiresAt });
 
         req.session.pendingLogin = { userId : user._id};
-        req.session.save();
+        
+        await new Promise((resolve, reject) => {
+            req.session.save((err) => {
+                if (err) {
+                    console.error("Session save error:", err);
+                    reject(err);
+                } else {
+                    console.log("Session saved successfully");
+                    resolve();
+                }
+            });
+        });
 
-        await sendEmail(user.email , `Your VERLO login OTP is ${otp}`);
-        return res.status(200).json({ message: "OTP sent to your email" , type: "info"});
+        try {
+            await sendEmail(email, `Your VERLO signup OTP is ${otp}`);
+            return res.status(200).json({ message: "OTP sent to your email", type: "info" });
+        } catch (err) {
+            console.error("Email send failed:", err.message);
+            return res.status(500).json({ message: "Failed to send OTP. Please try again.", type: "error" });
+        }
     })(req, res);
 }
 
 module.exports.verifyLoginUser = async(req , res) => {
     const { otp } = req.body;
+
+    await new Promise((resolve) => {
+        req.session.reload(() => {
+            console.log("Session reloaded");
+            resolve();
+        });
+    });
+
     const pendingLogin = req.session.pendingLogin;
     const likedItemsBeforeLogin = req.session.likedItems;
     const cartItemsBeforeLogin = req.session.cartItems;

@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import axios from 'axios';
 import { BASE_URL } from '../Utils/apiConfig.js';
 
+// Configure axios to send credentials with all requests
+axios.defaults.withCredentials = true;
+
 const userStore = create((set) => ({
     message: "",
     type: "",
