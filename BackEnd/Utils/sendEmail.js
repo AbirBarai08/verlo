@@ -1,20 +1,28 @@
-const { Resend } = require('resend');
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const sendEmail = async (to, message) => {
+  console.log("SMTP PASS:", process.env.SEND_EMAIL_PASS);
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'abirbarai08@gmail.com',
+      pass: process.env.SEND_EMAIL_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false // optional for testing
+    }
+  });
+
+  const mailOptions = {
+    from: `"VERLO" <abirbarai08@gmail.com>`,
+    to,
+    subject: 'Your VERLO OTP',
+    text: message,
+  };
+
   try {
-    const data = await resend.emails.send({
-      from: 'VERLO <onboarding@resend.dev>',
-      to: to,
-      subject: 'Your VERLO OTP',
-      html: message,
-    });
-    console.log("Email sent successfully to", to);
-    return data;
+    await transporter.sendMail(mailOptions);
+    console.log("Mail sent successfully to", to);
   } catch (err) {
-    console.error("Resend email error:", err);
-    throw new Error(`Failed to send email: ${err.message}`);
+    console.error("Mail error:", err.message);
   }
 };
-
-module.exports = sendEmail;
