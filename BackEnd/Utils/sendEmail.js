@@ -1,3 +1,4 @@
+const nodemailer = require("nodemailer");
 const sendEmail = async (to, message) => {
   console.log("SMTP PASS:", process.env.SEND_EMAIL_PASS);
 
