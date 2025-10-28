@@ -5,9 +5,9 @@ const sendEmail = async (to, message) => {
   try {
     await resend.emails.send({
       from: 'VERLO <abirbarai08@gmail.com>',
-      to,
+      to: to,
       subject: 'Your VERLO OTP',
-      text: message
+      html: message,
     });
     console.log("OTP email sent to", to);
   } catch (err) {
